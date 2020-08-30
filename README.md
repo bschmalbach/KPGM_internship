@@ -11,3 +11,5 @@ Finally, a feedback mail for the client was to be written, detailing issues with
 
 
 **Task 3** was to make a Tableu dashboard to illustrate the findings, see below.
+
+<img src="https://github.com/bschmalbach/KPMG_internship/blob/master/Untitled.png">
