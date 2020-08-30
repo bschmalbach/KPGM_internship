@@ -7,7 +7,7 @@ These tasks are part of the KPMG virtual internship in Data Science / Analytics.
 Finally, a feedback mail for the client was to be written, detailing issues with the data and how these would impact the analyses.
 
 
-**Task 2**
+**Task 2** was to make a presentation detailing the analysis plan for the data we received above, the goal being to predict which new client is likely to yield the highest profit.
 
 
 **Task 3**
