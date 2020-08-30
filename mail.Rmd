@@ -1,0 +1,103 @@
+---
+title: "Letter to customer"
+author: "Bjarne Schmalbach"
+date: "8/30/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(dplyr)
+library(readxl)
+library(kableExtra)
+
+transactions <- read_xlsx("KPMG_VI_New_raw_data_update_final.xlsx", sheet = 2, skip=1)
+demographic <- read_xlsx("KPMG_VI_New_raw_data_update_final.xlsx", sheet = 4, skip=1)
+address <- read_xlsx("KPMG_VI_New_raw_data_update_final.xlsx", sheet = 5, skip=1)
+
+#accuracy
+#completeness
+#consistency
+#currency
+#relevancy
+#validity
+#uniqueness
+
+
+#overview
+ov <- data.frame(matrix(NA,3,3))
+rownames(ov) <- c("Customer Demographic", "Customer Address", "Transaction Data")
+names(ov) <- c("# of records", "Unique customer IDs", "Data received on")
+
+ov[,1] <- c(nrow(demographic), nrow(address), nrow(transactions))
+ov[,2] <- c(length(unique(demographic$customer_id)), length(unique(address$customer_id)), length(unique(transactions$customer_id)))
+ov[,3] <- rep("30/08/2020")
+
+
+
+
+#Issues with the data
+
+#transactions data-----------------------
+
+#product_first_sold_date is not a date
+#missing values
+
+#demographic data------------------------
+
+#missing values (NA and n/a)
+#gender sometimes abbreviated (F, U?)
+#DOB is not a date
+#"default" column is not readable
+
+#address data 
+#appears to be fine
+
+#general
+#not all individuals are present in every data set, e.g "Aarons" in demographic does not exist in customers
+
+#no duplicates
+sum(duplicated(transactions$transaction_id))
+sum(duplicated(address$customer_id))
+sum(duplicated(demographic$customer_id))
+
+#customer IDs do not fully overlap
+sum(!(transactions$customer_id %in% address$customer_id))
+sum(!(transactions$customer_id %in% demographic$customer_id))
+sum(!(address$customer_id %in% transactions$customer_id))
+sum(!(address$customer_id %in% demographic$customer_id))
+sum(!(demographic$customer_id %in% transactions$customer_id))
+sum(!(demographic$customer_id %in% address$customer_id))
+
+
+
+
+######
+
+
+
+```
+
+Dear customer,
+
+thank you for submitting your data for analysis.
+Below you may find a summary of the data we received.
+
+`r ov %>%  kbl(caption = "Data received") %>% kable_classic(full_width = F, html_font = "Cambria")`\ 
+
+In our initial assessment of your data, we identified several issues that should be addressed before we can move forward to an in-depth analysis.
+
+Specifically, the following issues need to be addressed:
+
+  1. There are many missing data points in the data sheets (n/a or just blank). Could these be recovered? If not they need to be removed or imputed before analysis.
+  2. Customer IDs do not overlap fully between the data sets. Depending on what analyses should be performed, this could lead to the exclusion of some observations. If you present the up-to-date version for all records, this should not be an issue.
+  3. Dates are often not given as dates but as integer numbers (this applies to all three data sheets, e.g. variables DOB and product_first_sold_date)
+  4. In the demographics data, gender is sometimes given in abbreviated form (F) and some values are unclear (U).
+  5. In the demographics data, the "default" column is unreadable code.
+  
+Missing (or incorrectly coded) values can influence the analysis. Thus, this issues should be rectified to ensure the validity of the analyses.
+
+Best regards,
+
+Bjarne Schmalbach
