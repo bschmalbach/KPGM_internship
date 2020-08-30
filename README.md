@@ -10,4 +10,4 @@ Finally, a feedback mail for the client was to be written, detailing issues with
 **Task 2** was to make a presentation detailing the analysis plan for the data we received above, the goal being to predict which new client is likely to yield the highest profit.
 
 
-**Task 3**
+**Task 3** was to make a Tableu dashboard to illustrate the findings, see below.
